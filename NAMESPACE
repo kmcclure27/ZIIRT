@@ -2,3 +2,4 @@
 
 export(create_mirt_MHGRM)
 export(generate_MHGRM_data)
+export(generate_MZIGRM_data)

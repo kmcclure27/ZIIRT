@@ -19,7 +19,7 @@ generate_MHGRM_data(
 
 \item{J}{Number of Items}
 
-\item{K}{Number of Response Categories}
+\item{K}{Number of Response Categories. Must be greater than 2 for the MHGRM}
 
 \item{rho}{Correlation Between Person Parameters}
 

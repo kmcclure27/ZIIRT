@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_mirt_objects.R
 \name{create_mirt_MHGRM}
 \alias{create_mirt_MHGRM}
-\title{Create a Multidimensional Hurdle Graded Response Model mirt Item}
+\title{Create a Multidimensional Hurdle Graded Response Model mirt custom item}
 \usage{
 create_mirt_MHGRM(K)
 }
@@ -10,7 +10,7 @@ create_mirt_MHGRM(K)
 \item{K}{An integer denoting the number of item response categories}
 }
 \value{
-A mirt item from mirt::createItem()
+A mirt item from mirt::createItem() named "MHGRM_K"
 }
 \description{
 Creates a Multidimensional Hurdle Graded Response Model (MHGRM) with K response categories as a custom item in the mirt package
