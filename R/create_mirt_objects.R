@@ -1,19 +1,20 @@
 ### Attempt at a General Constructor function for an MHGRM mirt item type
 
 #' Create a Multidimensional Hurdle Graded Response Model mirt Item
-#' 
+#'
 #' Creates a Multidimensional Hurdle Graded Response Model (MHGRM) with K response categories as a custom item in the mirt package
 #' @param K An integer denoting the number of item response categories
-#' 
+#'
 #' @return A mirt item from mirt::createItem()
-#' 
+#' @export
+#'
 create_mirt_MHGRM <- function(K){
   stopifnot("K must be an integer"=all(is.numeric(K),K))
   name=paste0("MHGRM_",K)
   par = c(a=rep(1,2),
           b=seq(-1,1,length.out=K-1))
   est = rep(TRUE,length(par))
-  
+
   P.MHGRM_K <- function(par,Theta,ncat){
     D = 1.702 # Scaling Constant
     a1 = par[1]
