@@ -31,7 +31,7 @@ MZIGRM_mat2 <- function(theta,slope,intercept,D=1.702){
 
 #' Simulate Item Responses for the MZIGRM
 #'
-#'
+#' Simulates Item Responses for the multidimensional zero-inflated graded response model. This function wraps MHGRM_simulate_response
 #'
 #' @inheritParams MHGRM_simulate_response
 #'

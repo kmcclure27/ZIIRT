@@ -15,5 +15,5 @@ MZIGRM_simulate_response(x, seed = NULL)
 An N length vector of item responses 0:(K-1)
 }
 \description{
-Simulate Item Responses for the MZIGRM
+Simulates Item Responses for the multidimensional zero-inflated graded response model. This function wraps MHGRM_simulate_response
 }
