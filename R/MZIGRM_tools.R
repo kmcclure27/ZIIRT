@@ -23,7 +23,6 @@ MZIGRM_mat2 <- function(theta,slope,intercept,D=1.702){
   P_GRM = GRM_mat2(theta=theta[,2,drop=F],
                    slope=slope[,2,drop=F],
                    intercept=intercept[,2:n_ints,drop=F],D=D)
-  #print(P_GRM)
   Pk = cbind(P0[,1]+(P0[,2])*P_GRM[,1],
              (P0[,2]*P_GRM[,2:n_ints]))
   return(Pk)
@@ -87,8 +86,6 @@ generate_MZIGRM_data <- function(N,J,K,rho=0,
     interceptK <- t(apply(interceptK,1,sort))
     b <- cbind(intercept0,interceptK)
   }
-  #print(dim(b))
-  #return(b)
   item_params = list(slopes=a,intercepts=b)
 
   resp_ps <- array(data=NA, dim = c(N,K,J))
