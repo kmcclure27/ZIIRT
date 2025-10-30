@@ -39,9 +39,9 @@ create_mirt_MHGRM <- function(K){
   return(x)
 }
 
-#' Create A Multidimesnional Zero-Inflated Graded Response Model mirt custom item
+#' Create A Multidimensional Zero-Inflated Graded Response Model mirt custom item
 #'
-#' NOT TESTED YET
+#' Creates a Multidimensional Zero Inflated Graded Response Model (MZI-GRM) with K response categories as a custom item type in the mirt package
 #'
 #' @param K Number of Item Response Categories (integer)
 #'
