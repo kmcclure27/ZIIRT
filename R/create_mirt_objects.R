@@ -46,6 +46,7 @@ create_mirt_MHGRM <- function(K){
 #' @param K Number of Item Response Categories (integer)
 #'
 #' @return A mirt custom item from mirt::createItem() named "MZIGRM_K"
+#' @export
 #'
 create_mirt_MZIGRM <- function(K){
   stopifnot("K must be an integer"=all(is.numeric(K),K%%1==0))
