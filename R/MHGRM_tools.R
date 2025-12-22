@@ -130,9 +130,9 @@ generate_MHGRM_data <- function(N,J,K,rho=0,theta=NULL,a=NULL,b=NULL,
   if(is.null(a)){
     a <- matrix(stats::runif(n=2*J,min=1,max=4),nrow=J,ncol=2)
   }else{
-    stopifnot("a must have two columns"=ncol(a==2),
+    stopifnot("a must have two columns"=ncol(a)==2,
               "a must be numeric"=is.numeric(a),
-              "a must have J rows"=nrows(a)==J)
+              "a must have J rows"=nrow(a)==J)
     a <- a
   }
   if(is.null(b)){
@@ -154,7 +154,7 @@ generate_MHGRM_data <- function(N,J,K,rho=0,theta=NULL,a=NULL,b=NULL,
   }
 
   item_params = list(slopes=a,intercepts=b)
-  resp_ps <- array(data=NA, dim = c(N,K,J))
+  resp_ps <- array(data=NA, dim = c(N,K+1,J))
   for(j in 1:J){
     resp_ps[,,j] <- MHGRM_mat2(theta=pps,
                                slope=a[j,,drop=F],
