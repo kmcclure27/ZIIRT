@@ -95,7 +95,7 @@ MHGRM_simulate_response <- function(x,seed=NULL){
 #' @return A list containing the Generated Person Parameters, Item Parameters, and simulate item responses
 #' @export
 #'
-generate_MHGRM_data <- function(N,J,K,rho=0,
+generate_MHGRM_data <- function(N,J,K,rho=0,theta=NULL,
                                 seed_person_params=NULL,seed_item_params=NULL,
                                 seed_response=NULL){
   stopifnot("K must be greater than 2" = K>2,

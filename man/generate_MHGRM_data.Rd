@@ -9,6 +9,7 @@ generate_MHGRM_data(
   J,
   K,
   rho = 0,
+  theta = NULL,
   seed_person_params = NULL,
   seed_item_params = NULL,
   seed_response = NULL
@@ -23,13 +24,13 @@ generate_MHGRM_data(
 
 \item{rho}{Correlation Between Person Parameters}
 
+\item{theta}{An Nx2 matrix of Person Parameters}
+
 \item{seed_person_params}{An optional numeric to set the seed for person parameters}
 
 \item{seed_item_params}{An optional numeric to set the seed for item parameters}
 
 \item{seed_response}{An optional numeric or J length numeric to set the seed for item responses}
-
-\item{theta}{An Nx2 matrix of Person Parameters}
 }
 \value{
 A list containing the Generated Person Parameters, Item Parameters, and simulate item responses
