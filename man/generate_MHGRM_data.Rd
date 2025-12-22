@@ -28,6 +28,8 @@ generate_MHGRM_data(
 \item{seed_item_params}{An optional numeric to set the seed for item parameters}
 
 \item{seed_response}{An optional numeric or J length numeric to set the seed for item responses}
+
+\item{theta}{An Nx2 matrix of Person Parameters}
 }
 \value{
 A list containing the Generated Person Parameters, Item Parameters, and simulate item responses

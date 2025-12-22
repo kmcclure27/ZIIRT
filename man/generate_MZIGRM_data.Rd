@@ -9,6 +9,7 @@ generate_MZIGRM_data(
   J,
   K,
   rho = 0,
+  theta = NULL,
   seed_person_params = NULL,
   seed_item_params = NULL,
   seed_response = NULL
@@ -22,6 +23,8 @@ generate_MZIGRM_data(
 \item{K}{Number of Response Categories. Must be greater than 1 for the MZIGRM}
 
 \item{rho}{Correlation Between Person Parameters}
+
+\item{theta}{An Nx2 matrix of Person Parameters}
 
 \item{seed_person_params}{An optional numeric to set the seed for person parameters}
 

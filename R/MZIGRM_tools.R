@@ -1,5 +1,3 @@
-
-
 #' MZIGRM Response Probabilities
 #'
 #' Calculates the MZI Graded Response Model response category probabilities
@@ -49,13 +47,14 @@ MZIGRM_simulate_response <- function(x,seed=NULL){
 #' @param J Number of Items
 #' @param K Number of Response Categories. Must be greater than 1 for the MZIGRM
 #' @param rho Correlation Between Person Parameters
+#' @param theta An Nx2 matrix of Person Parameters
 #' @param seed_person_params An optional numeric to set the seed for person parameters
 #' @param seed_item_params An optional numeric to set the seed for item parameters
 #' @param seed_response An optional numeric or J length numeric to set the seed for item responses
 #'
 #' @return A list containing the Generated Person Parameters, Item Parameters, and simulate item responses
 #' @export
-generate_MZIGRM_data <- function(N,J,K,rho=0,
+generate_MZIGRM_data <- function(N,J,K,rho=0,theta=NULL,
                                 seed_person_params=NULL,seed_item_params=NULL,
                                 seed_response=NULL){
   stopifnot("K must be greater than 1" = K>1,
@@ -70,7 +69,15 @@ generate_MZIGRM_data <- function(N,J,K,rho=0,
               "seed_person_params must be numeric"=is.numeric(seed_person_params))
     set.seed(seed_person_params)
   }
-  pps <- MASS::mvrnorm(n=N,mu=c(0,0),Sigma=matrix(c(1,rho,rho,1),nrow=2,byrow=T))
+  if(is.null(theta)){
+    pps <- MASS::mvrnorm(n=N,mu=c(0,0),Sigma=matrix(c(1,rho,rho,1),nrow=2,byrow=T))
+  }else{
+    stopifnot("theta must have two columns" = ncol(theta)==2,
+              "theta must have N rows"=nrow(theta)==N,
+              "theta must be numeric"=is.numeric(theta))
+    pps<-theta
+  }
+
   if(!is.null(seed_item_params)){
     stopifnot("seed_item_params should be a scalar"=length(seed_item_params)==1,
               "seed_item_params must be numeric"=is.numeric(seed_item_params))
@@ -78,7 +85,7 @@ generate_MZIGRM_data <- function(N,J,K,rho=0,
   }
   a <- matrix(stats::runif(n=2*J,min=1,max=4),nrow=J,ncol=2)
   intercept0 <- matrix(stats::runif(n=J,min=-2.5,max=0),nrow=J) #b0
-  interceptK <- matrix(stats::runif(n = J*(K-1),min = -2.5, max = 2.5),
+  interceptK <- matrix(stats::runif(n = J*(K-1),min = -2, max = 2.5),
                        nrow=J)
   if(K==2){
     b = cbind(intercept0,interceptK)
