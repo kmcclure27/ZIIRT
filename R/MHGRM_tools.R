@@ -88,6 +88,8 @@ MHGRM_simulate_response <- function(x,seed=NULL){
 #' @param K Number of Response Categories. Must be greater than 2 for the MHGRM
 #' @param rho Correlation Between Person Parameters
 #' @param theta An Nx2 matrix of Person Parameters
+#' @param a A Jx2 matrix of slope parameters
+#' @param b A JxK matrix of intercept parameters
 #' @param seed_person_params An optional numeric to set the seed for person parameters
 #' @param seed_item_params An optional numeric to set the seed for item parameters
 #' @param seed_response An optional numeric or J length numeric to set the seed for item responses
@@ -125,19 +127,33 @@ generate_MHGRM_data <- function(N,J,K,rho=0,theta=NULL,
               "seed_item_params must be numeric"=is.numeric(seed_item_params))
     set.seed(seed_item_params)
   }
-  a <- matrix(stats::runif(n=2*J,min=1,max=4),nrow=J,ncol=2)
-  intercept0 <- matrix(stats::runif(n=J,min=-2.5,max=0),nrow=J) #b0
-  interceptK <- matrix(stats::runif(n = J*(K-2),min = -2.5, max = 2.5),
-                       nrow=J)
-  if(K==3){
-    b = cbind(intercept0,interceptK)
+  if(is.null(a)){
+    a <- matrix(stats::runif(n=2*J,min=1,max=4),nrow=J,ncol=2)
   }else{
-    interceptK <- t(apply(interceptK,1,sort))
+    stopifnot("a must have two columns"=ncol(a==2),
+              "a must be numeric"=is.numeric(a),
+              "a must have J rows"=nrows(a)==J)
+    a <- a
+  }
+  if(is.null(b)){
+    intercept0 <- matrix(stats::runif(n=J,min=-2.5,max=0),nrow=J) #b0
+    interceptK <- matrix(stats::runif(n = J*(K-2),min = -2.5, max = 2.5),
+                         nrow=J)
+    if(K==3){
+      b = cbind(intercept0,interceptK)
+    }else{
+      interceptK <- t(apply(interceptK,1,sort))
+    }
+
+    b <- cbind(intercept0,interceptK)
+  }else{
+    stopifnot("b must have K columns"=ncol(b)==K,
+              "b must be numeric"=is.numeric(b),
+              "b must have J rows"=nrow(b)==J)
+    b <- b
   }
 
-  b <- cbind(intercept0,interceptK)
   item_params = list(slopes=a,intercepts=b)
-
   resp_ps <- array(data=NA, dim = c(N,K,J))
   for(j in 1:J){
     resp_ps[,,j] <- MHGRM_mat2(theta=pps,
