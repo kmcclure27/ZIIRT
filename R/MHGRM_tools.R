@@ -87,6 +87,7 @@ MHGRM_simulate_response <- function(x,seed=NULL){
 #' @param J Number of Items
 #' @param K Number of Response Categories. Must be greater than 2 for the MHGRM
 #' @param rho Correlation Between Person Parameters
+#' @param theta An Nx2 matrix of Person Parameters
 #' @param seed_person_params An optional numeric to set the seed for person parameters
 #' @param seed_item_params An optional numeric to set the seed for item parameters
 #' @param seed_response An optional numeric or J length numeric to set the seed for item responses
@@ -111,7 +112,14 @@ generate_MHGRM_data <- function(N,J,K,rho=0,
               "seed_person_params must be numeric"=is.numeric(seed_person_params))
     set.seed(seed_person_params)
   }
-  pps <- MASS::mvrnorm(n=N,mu=c(0,0),Sigma=matrix(c(1,rho,rho,1),nrow=2,byrow=T))
+  if(is.null(theta)){
+    pps <- MASS::mvrnorm(n=N,mu=c(0,0),Sigma=matrix(c(1,rho,rho,1),nrow=2,byrow=T))
+  }else{
+    stopifnot("theta must have two columns" = ncol(theta)==2,
+              "theta must have N rows"=nrow(theta)==N,
+              "theta must be numeric"=is.numeric(theta))
+    pps<-theta
+  }
   if(!is.null(seed_item_params)){
     stopifnot("seed_item_params should be a scalar"=length(seed_item_params)==1,
               "seed_item_params must be numeric"=is.numeric(seed_item_params))

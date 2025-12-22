@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_mirt_objects.R
 \name{create_mirt_MZIGRM}
 \alias{create_mirt_MZIGRM}
-\title{Create A Multidimensional Zero-Inflated Graded Response Model mirt custom item}
+\title{Create A Multidimesnional Zero-Inflated Graded Response Model mirt custom item}
 \usage{
 create_mirt_MZIGRM(K)
 }
@@ -13,5 +13,5 @@ create_mirt_MZIGRM(K)
 A mirt custom item from mirt::createItem() named "MZIGRM_K"
 }
 \description{
-Creates a Multidimensional Zero Inflated Graded Response Model (MZI-GRM) with K response categories as a custom item type in the mirt package
+NOT TESTED YET
 }

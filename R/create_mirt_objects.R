@@ -39,19 +39,18 @@ create_mirt_MHGRM <- function(K){
   return(x)
 }
 
-#' Create A Multidimensional Zero-Inflated Graded Response Model mirt custom item
+#' Create A Multidimesnional Zero-Inflated Graded Response Model mirt custom item
 #'
-#' Creates a Multidimensional Zero Inflated Graded Response Model (MZI-GRM) with K response categories as a custom item type in the mirt package
+#' NOT TESTED YET
 #'
 #' @param K Number of Item Response Categories (integer)
 #'
 #' @return A mirt custom item from mirt::createItem() named "MZIGRM_K"
-#' @export
 #'
 create_mirt_MZIGRM <- function(K){
-  stopifnot("K must be an integer"=all(is.numeric(K),K%%1==0))
+  stopifnot("K must be an integer"=all(is.numeric(K),K))
   name=paste0("MZIGRM_",K)
-  par = c(a=rep(1,2),b=seq(-1,1,length.out=K))
+  par = rep(a=c(1,2),b=seq(-1,1,length.out=K))
   est = rep(TRUE,length(par))
   P.MZIGRM_K <- function(par,Theta,ncat){
     D = 1.702 # Scaling Constant
@@ -67,9 +66,9 @@ create_mirt_MZIGRM <- function(K){
     CP = cbind(rep(1,nrow(CP)),
                CP,
                rep(0,nrow(CP)))
-    P_GRM = CP[,1:ncat,drop=F]-CP[,2:(ncat+1),drop=F]
+    P_GRM = CP[,1:ncat,drop=F]-CP[,2:(ncat+1),drop+F]
     Pk = cbind((P0+(1-P0)*P_GRM[,1,drop=F]),
-              (1-P0)*P_GRM[,2:(ncat),drop=F])
+              (1-P0)*P_GRM[,2:(ncat)+1,drop=F])
     colnames(Pk) <- NULL
     return(Pk)
   }

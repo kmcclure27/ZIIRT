@@ -1,3 +1,5 @@
+
+
 #' MZIGRM Response Probabilities
 #'
 #' Calculates the MZI Graded Response Model response category probabilities
@@ -76,7 +78,7 @@ generate_MZIGRM_data <- function(N,J,K,rho=0,
   }
   a <- matrix(stats::runif(n=2*J,min=1,max=4),nrow=J,ncol=2)
   intercept0 <- matrix(stats::runif(n=J,min=-2.5,max=0),nrow=J) #b0
-  interceptK <- matrix(stats::runif(n = J*(K-1),min = -2, max = 2.5),
+  interceptK <- matrix(stats::runif(n = J*(K-1),min = -2.5, max = 2.5),
                        nrow=J)
   if(K==2){
     b = cbind(intercept0,interceptK)
