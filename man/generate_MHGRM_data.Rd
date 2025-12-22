@@ -10,6 +10,8 @@ generate_MHGRM_data(
   K,
   rho = 0,
   theta = NULL,
+  a = NULL,
+  b = NULL,
   seed_person_params = NULL,
   seed_item_params = NULL,
   seed_response = NULL
@@ -26,15 +28,15 @@ generate_MHGRM_data(
 
 \item{theta}{An Nx2 matrix of Person Parameters}
 
+\item{a}{A Jx2 matrix of slope parameters}
+
+\item{b}{A JxK matrix of intercept parameters}
+
 \item{seed_person_params}{An optional numeric to set the seed for person parameters}
 
 \item{seed_item_params}{An optional numeric to set the seed for item parameters}
 
 \item{seed_response}{An optional numeric or J length numeric to set the seed for item responses}
-
-\item{a}{A Jx2 matrix of slope parameters}
-
-\item{b}{A JxK matrix of intercept parameters}
 }
 \value{
 A list containing the Generated Person Parameters, Item Parameters, and simulate item responses
