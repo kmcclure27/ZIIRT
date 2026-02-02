@@ -50,6 +50,10 @@ MHGRM_mat2 <- function(theta,slope,intercept,D=1.702){
   P0 = GRM_mat2(theta=theta[,1,drop=F],
                 slope=slope[,1,drop=F],
                 intercept=intercept[,1,drop=F],D=D)
+  if(ncol(intercept)==1){
+    Pk=P0
+    return(Pk)
+  }
   P_GRM = GRM_mat2(theta=theta[,2,drop=F],
                    slope=slope[,2,drop=F],
                    intercept=intercept[,2:n_ints,drop=F],D=D)
@@ -89,7 +93,7 @@ MHGRM_simulate_response <- function(x,seed=NULL){
 #' @param rho Correlation Between Person Parameters
 #' @param theta An Nx2 matrix of Person Parameters
 #' @param a A Jx2 matrix of slope parameters
-#' @param b A JxK matrix of intercept parameters
+#' @param b A JxK-1 matrix of intercept parameters
 #' @param seed_person_params An optional numeric to set the seed for person parameters
 #' @param seed_item_params An optional numeric to set the seed for item parameters
 #' @param seed_response An optional numeric or J length numeric to set the seed for item responses
@@ -100,7 +104,7 @@ MHGRM_simulate_response <- function(x,seed=NULL){
 generate_MHGRM_data <- function(N,J,K,rho=0,theta=NULL,a=NULL,b=NULL,
                                 seed_person_params=NULL,seed_item_params=NULL,
                                 seed_response=NULL){
-  stopifnot("K must be greater than 2" = K>2,
+  stopifnot("K must be greater than 1" = K>1,
             "K must be an integer" = K%%1==0,
             "N must be an integer" = N%%1==0,
             "J must be an integer" = J%%1==0,
@@ -139,22 +143,26 @@ generate_MHGRM_data <- function(N,J,K,rho=0,theta=NULL,a=NULL,b=NULL,
     intercept0 <- matrix(stats::runif(n=J,min=-2.5,max=0),nrow=J) #b0
     interceptK <- matrix(stats::runif(n = J*(K-2),min = -2.5, max = 2.5),
                          nrow=J)
+
     if(K==3){
       b = cbind(intercept0,interceptK)
     }else{
       interceptK <- t(apply(interceptK,1,sort))
     }
-
-    b <- cbind(intercept0,interceptK)
+    if(K==2){
+      b = matrix(intercept0,ncol=1)
+    }else{
+      b <- cbind(intercept0,interceptK)
+    }
   }else{
-    stopifnot("b must have K columns"=ncol(b)==K,
+    stopifnot("b must have K-1 columns for the MH-GRM"=ncol(b)==(K-1),
               "b must be numeric"=is.numeric(b),
               "b must have J rows"=nrow(b)==J)
     b <- b
   }
 
   item_params = list(slopes=a,intercepts=b)
-  resp_ps <- array(data=NA, dim = c(N,K+1,J))
+  resp_ps <- array(data=NA, dim = c(N,K,J))
   for(j in 1:J){
     resp_ps[,,j] <- MHGRM_mat2(theta=pps,
                                slope=a[j,,drop=F],

@@ -30,7 +30,7 @@ generate_MHGRM_data(
 
 \item{a}{A Jx2 matrix of slope parameters}
 
-\item{b}{A JxK matrix of intercept parameters}
+\item{b}{A JxK-1 matrix of intercept parameters}
 
 \item{seed_person_params}{An optional numeric to set the seed for person parameters}
 
