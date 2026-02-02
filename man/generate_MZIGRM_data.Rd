@@ -10,6 +10,8 @@ generate_MZIGRM_data(
   K,
   rho = 0,
   theta = NULL,
+  a = NULL,
+  b = NULL,
   seed_person_params = NULL,
   seed_item_params = NULL,
   seed_response = NULL
@@ -25,6 +27,10 @@ generate_MZIGRM_data(
 \item{rho}{Correlation Between Person Parameters}
 
 \item{theta}{An Nx2 matrix of Person Parameters}
+
+\item{a}{A Jx2 matrix of item slope parameters}
+
+\item{b}{A JxK matrix of item intercept parameters; first column is the ZI threshold}
 
 \item{seed_person_params}{An optional numeric to set the seed for person parameters}
 
