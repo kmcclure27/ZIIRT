@@ -15,3 +15,17 @@ usethis::use_data(MZI_dat, overwrite = TRUE)
 
 load("~/Research/Data/CAT-SRP Data/STB.RData")
 usethis::use_data(STB,overwrite=TRUE)
+
+#Generate MZI proportion ZI table
+bg = expand.grid(b0=seq(-6,6,by=.05), #grid of item intercepts
+                 b1=seq(-6,6,by=.05))
+bg = as.matrix(bg)
+pZI = vector(length=nrow(bg))
+for(i in 1:nrow(bg)){
+  pZI[i] = propZI(b0=bg[i,1],b1=bg[i,2])
+}
+
+#Large table of expected proportion of zero inflation due to theta0 (assumes BVN(0,1))
+propZI_table = data.frame(propZI=pZI,b0=bg[,1],b1=bg[,2])
+row.names(propZI_table) <- NULL
+usethis::use_data(propZI_table,internal=TRUE,compress="xz",overwrite=T)
