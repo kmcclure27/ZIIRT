@@ -39,9 +39,9 @@ create_mirt_MHGRM <- function(K){
   return(x)
 }
 
-#' Create A Multidimesnional Zero-Inflated Graded Response Model mirt custom item
+#' Create A Multidimensional Zero-Inflated Graded Response Model mirt custom item
 #'
-#' NOT TESTED YET
+#' IN TESTING: Pk seems correct but mirt estimation is very off
 #'
 #' @param K Number of Item Response Categories (integer)
 #'
@@ -60,16 +60,21 @@ create_mirt_MZIGRM <- function(K){
     b0 = par[3]
     b = par[-c(1,2,3)]
     P0 = 1 - 1/(1+exp(-D*a1*Theta[,1]+b0))
-    CP = matrix(0,nrow=nrow(Theta),ncol=length(b))
+    #Cumulative Probabilities
+    CP = matrix(0,nrow=nrow(Theta),ncol=length(b)) #up to here seems fine
     for(k in 1:length(b)){
       CP[,k] <- 1/(1+exp(-D*a2*Theta[,2,drop=F]+b[k]))
     }
     CP = cbind(rep(1,nrow(CP)),
                CP,
                rep(0,nrow(CP)))
-    P_GRM = CP[,1:ncat,drop=F]-CP[,2:(ncat+1),drop=F]
+
+    P_GRM = CP[,1:(ncat),drop=F]-CP[,2:(ncat+1),drop=F]
+
+    #Trace Probability combining p0 and pk
     Pk = cbind((P0+(1-P0)*P_GRM[,1,drop=F]),
               (1-P0)*P_GRM[,2:(ncat),drop=F])
+
     colnames(Pk) <- NULL
     return(Pk)
   }
