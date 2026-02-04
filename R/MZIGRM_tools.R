@@ -274,7 +274,7 @@ MZI_find_b0 <- function(propZI0,b1,n=1,tol=0.10,thr=NULL){
   if(nrow(x_sub)==0){
     y = x$b1[which.min(abs(x$b1-b1))]
     x_sub = x[x$b1==y,]
-    warning(paste0("No perfect match for b1 = ",b1," found. b1 = ",y," was used"))
+   # warning(paste0("No perfect match for b1 = ",b1," found. b1 = ",y," was used"))
   }
   o = order(x_sub$d)
   x_sub = x_sub[o,];rownames(x_sub) <- NULL
@@ -325,7 +325,7 @@ MZI_find_b1 <- function(propZI0,b0,n=1,tol=0.1,thr=NULL){
   if(nrow(x_sub)==0){
     y = x$b0[which.min(abs(x$b0-b0))]
     x_sub = x[x$b0==y,]
-    warning(paste0("No perfect match for b0 = ",b0," found. b0 = ",y," was used"))
+    #warning(paste0("No perfect match for b0 = ",b0," found. b0 = ",y," was used"))
   }
   o = order(x_sub$d)
   x_sub = x_sub[o,];rownames(x_sub) <- NULL
