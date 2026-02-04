@@ -168,13 +168,21 @@ generate_MZIGRM_data <- function(N,J,K,rho=0,theta=NULL,a=NULL,b=NULL,
 #'
 #' @param b0 The item intercept associated the theta0 (presence)
 #' @param b1 The item intercepts associated with a zero response from theta1 (severity)
+#' @param theta A vector of susceptibility/severity latent variable scores. Defaults to the population mean c(0,0)
+#' @param a A vector of item discrimination parameters for susceptibility/severity latent variables. Defaults to c(1,1)
 #'
-#' @return A numeric
+#' @return The expected proportion of zeros in the MZI-GRM
 #' @export
 
-MZI_propZI <- function(b0,b1){
-  x1 = (1+exp(b0))^-1
-  x2 = (1+exp(b1))^-1
+MZI_propZI <- function(b0,b1,theta=c(0,0),a=c(1,1)){
+  stopifnot("b0 and b1 must be numeric"=all(is.numeric(b0),is.numeric(b1)),
+            "theta must be length 2"=length(theta)==2,
+            "theta must be numeric"=all(is.numeric(theta)),
+            "a must be length 2"=length(a)==2,
+            "a must be numeric"=all(is.numeric(a)))
+
+  x1 = (1+exp(a[1]*theta[1]+b0))^-1
+  x2 = (1+exp(a[2]*theta[2]+b1))^-1
   n = 1-x1
   d = 1-x1+x1*(1-x2)
   return(n/d)
