@@ -5,13 +5,11 @@
 \title{Find b0 for MZI given a target Zero-Inflation Level}
 \usage{
 MZI_find_b0(propZI0, b1, n = 1, tol = 0.1, thr = NULL)
-
-MZI_find_b0(propZI0, b1, n = 1, tol = 0.1, thr = NULL)
 }
 \arguments{
 \item{propZI0}{The target proportion of zeros due to (lack of) presence. Must be a decimal between 0 and 1.}
 
-\item{b1}{Item Intercept controlling potential zeros from the severity component of the MZIGRM}
+\item{b1}{Item Intercept controlling potential zeros from the severity component of the MZI}
 
 \item{n}{The number of candidate b0 to output. The n that provide the closest propZI0 are returned}
 
@@ -21,13 +19,8 @@ MZI_find_b0(propZI0, b1, n = 1, tol = 0.1, thr = NULL)
 }
 \value{
 A n-row dataframe with columns for 1) expected proportion of zero inflated due to low presence, 2) b0, and 3) b1
-
-A n-row dataframe with columns for 1) expected proportion of zero inflated due to low presence, 2) b0, and 3) b1
 }
 \description{
-Finds item intercept(s) for the presence latent variable in the MZI given target level of zero-inflation due to (lack of) presence and the item intercept controlling zeros from low severity
-Assumes that the presence/severity latent variables are standard bivariate normal.
-
 Finds item intercept(s) for the presence latent variable in the MZI given target level of zero-inflation due to (lack of) presence and the item intercept controlling zeros from low severity
 Assumes that the presence/severity latent variables are standard bivariate normal.
 }
