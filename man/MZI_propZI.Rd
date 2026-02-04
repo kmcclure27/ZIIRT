@@ -4,15 +4,19 @@
 \alias{MZI_propZI}
 \title{Calculates Expected Proportion of Zero Inflation}
 \usage{
-MZI_propZI(b0, b1)
+MZI_propZI(b0, b1, theta = c(0, 0), a = c(1, 1))
 }
 \arguments{
 \item{b0}{The item intercept associated the theta0 (presence)}
 
 \item{b1}{The item intercepts associated with a zero response from theta1 (severity)}
+
+\item{theta}{A vector of susceptibility/severity latent variable scores. Defaults to the population mean c(0,0)}
+
+\item{a}{A vector of item discrimination parameters for susceptibility/severity latent variables. Defaults to c(1,1)}
 }
 \value{
-A numeric
+The expected proportion of zeros in the MZI-GRM
 }
 \description{
 Calculates the expected proportion of zeros due to zero inflation as a function of the presence latent variable. Assumes theta is standard bivariate normal.

@@ -22,7 +22,7 @@ bg = expand.grid(b0=seq(-6,6,by=.05), #grid of item intercepts
 bg = as.matrix(bg)
 pZI = vector(length=nrow(bg))
 for(i in 1:nrow(bg)){
-  pZI[i] = propZI(b0=bg[i,1],b1=bg[i,2])
+  pZI[i] = MZI_propZI(b0=bg[i,1],b1=bg[i,2])
 }
 
 #Large table of expected proportion of zero inflation due to theta0 (assumes BVN(0,1))
