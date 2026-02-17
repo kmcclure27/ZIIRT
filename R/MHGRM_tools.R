@@ -89,7 +89,7 @@ MHGRM_simulate_response <- function(x,seed=NULL){
 #'
 #' @param N Number of Observations
 #' @param J Number of Items
-#' @param K Number of Response Categories. Must be greater than 2 for the MHGRM
+#' @param K Number of Response Thresholds
 #' @param rho Correlation Between Person Parameters
 #' @param theta An Nx2 matrix of Person Parameters
 #' @param a A Jx2 matrix of slope parameters
@@ -155,7 +155,7 @@ generate_MHGRM_data <- function(N,J,K,rho=0,theta=NULL,a=NULL,b=NULL,
       b <- cbind(intercept0,interceptK)
     }
   }else{
-    stopifnot("b must have K-1 columns for the MH-GRM"=ncol(b)==(K-1),
+    stopifnot("b must have K columns for the MH-GRM"=ncol(b)==(K),
               "b must be numeric"=is.numeric(b),
               "b must have J rows"=nrow(b)==J)
     b <- b
