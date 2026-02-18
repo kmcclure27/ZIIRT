@@ -155,7 +155,7 @@ generate_MHGRM_data <- function(N,J,K,rho=0,theta=NULL,a=NULL,b=NULL,
       b <- cbind(intercept0,interceptK)
     }
   }else{
-    stopifnot("b must have K columns for the MH-GRM"=ncol(b)==(K),
+    stopifnot("b must have K-1 columns for the MH-GRM"=ncol(b)==(K-1),
               "b must be numeric"=is.numeric(b),
               "b must have J rows"=nrow(b)==J)
     b <- b
