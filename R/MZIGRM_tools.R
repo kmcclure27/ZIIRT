@@ -13,6 +13,8 @@ MZIGRM_mat2 <- function(theta,slope,intercept,D=1.702){
   if(is.vector(theta)){
     theta=matrix(theta,nrow=1)
   }
+  if(is.vector(slope)){slope=matrix(slope,nrow=1)}
+  if(is.vector(intercept)){intercept=matrix(intercept,nrow=1)}
   N = nrow(theta)
   n_ints = ncol(intercept)
   P0 = GRM_mat2(theta=theta[,1,drop=F],
@@ -46,7 +48,7 @@ MZIGRM_simulate_response <- function(x,seed=NULL){
 
 #' Generate MZIGRM Data
 #'
-#' Generates Some Factory MZIGRM Item Parameters, Person Parameters, and Item Responses
+#' Generates MZIGRM Item Parameters, Person Parameters, and Item Responses. Item and person parameters can also be provided directly.
 #'
 #' @param N Number of Observations
 #' @param J Number of Items
@@ -292,4 +294,50 @@ MZI_find_b1 <- function(propZI0,b0,n=1,tol=0.1,thr=NULL){
                     and the optimal solution: ", round(x_sub$propZI[1],4),". Proceed with caution."))
   }
   return(b1)
+}
+
+
+#' Calculates expected proportion of zeros for MZI-GRM
+#'
+#' Calculates the expected proportion of zero responses for a respondent of a given theta level given item parameters.
+#' Also provides the proportion of those zeros attributable to 1) susceptibility and 2) severity
+#'
+#' @param slope A J x 2 matrix of item slopes
+#' @param intercept A J x K-1 matrix of item intercpets
+#' @param theta A vector of susceptibility and severity latent scores; defaults to the mean 0, 0
+#' @param D A scaling constant for the GRM
+#'
+#' @return A J x K matrix
+#'
+expect_prop_Z = function(slope,intercept,theta=c(0,0),D=1.702){
+
+  if(is.vector(theta)){
+    theta=matrix(theta,nrow=1)
+  }else{
+    stopifnot("theta must have 2 columns"=ncol(theta)==2,
+              "theta must be 1 row"=nrow(theta)==1)
+  }
+
+  if(is.vector(slope)){slope=matrix(slope,nrow=1)}
+  if(is.vector(intercept)){intercept=matrix(intercept,nrow=1)}
+  P0 = matrix(NA,nrow=nrow(intercept),ncol=2)
+  P_GRM = matrix(NA,nrow=nrow(intercept),ncol=(ncol(intercept)))
+  for(j in 1:nrow(intercept)){
+    P0[j,] = GRM_mat2(theta=theta[,1,drop=F],
+                      slope=slope[j,1,drop=F],
+                      intercept=intercept[j,1,drop=F])
+    P_GRM[j,] =  GRM_mat2(theta=theta[,2,drop=F],
+                          slope=slope[j,2,drop=F],
+                          intercept=intercept[j,2:ncol(intercept),drop=F],D=D)
+  }
+  prop_exp_zero_susc = P0[,1,drop=F]/(P0[,1,drop=F]+P0[,2,drop=F]*P_GRM[,1,drop=F])
+  prop_exp_zero_sev = P0[,2,drop=F]*P_GRM[,1,drop=F]/(P0[,1,drop=F]+P0[,2,drop=F]*P_GRM[,1,drop=F])
+  prop_exp_zero_tot = (P0[,1,drop=F]+P0[,2,drop=F]*P_GRM[,1,drop=F])
+
+  out = cbind(prop_exp_zero_susc,
+              prop_exp_zero_sev,
+              prop_exp_zero_tot)
+  colnames(out) <- c("Prop_Zero_Susc","Prop_Zero_Sev","Prop_Zero_Tot")
+
+  return(out)
 }

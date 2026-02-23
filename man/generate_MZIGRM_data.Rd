@@ -42,5 +42,5 @@ generate_MZIGRM_data(
 A list containing the Generated Person Parameters, Item Parameters, and simulate item responses
 }
 \description{
-Generates Some Factory MZIGRM Item Parameters, Person Parameters, and Item Responses
+Generates MZIGRM Item Parameters, Person Parameters, and Item Responses. Item and person parameters can also be provided directly.
 }
