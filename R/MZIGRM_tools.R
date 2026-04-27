@@ -23,7 +23,7 @@ MZIGRM_mat2 <- function(theta,slope,intercept,D=1.702){
   P_GRM = GRM_mat2(theta=theta[,2,drop=F],
                    slope=slope[,2,drop=F],
                    intercept=intercept[,2:n_ints,drop=F],D=D)
-  if(nrow(theta==1)){
+  if(nrow(theta)==1){
     Pk = c(P0[1]+P0[2]*P_GRM[1],
                P0[2]*P_GRM[2:n_ints])
   }else{
